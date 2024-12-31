@@ -1,0 +1,27 @@
+[gd_scene load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://brick.gd" id="1_brick"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_brick"]
+size = Vector2(80, 30)
+
+[node name="Brick" type="StaticBody2D" groups=["brick"]]
+collision_layer = 1
+collision_mask = 2
+script = ExtResource("1_brick")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -40.0
+offset_top = -15.0
+offset_right = 40.0
+offset_bottom = 15.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_brick") 

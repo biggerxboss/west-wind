@@ -1,0 +1,166 @@
+[gd_scene load_steps=8 format=3 uid="uid://bbfvgbg1oyij"]
+
+[ext_resource type="Script" path="res://paddle.gd" id="1_n4k7p"]
+[ext_resource type="Script" path="res://ball.gd" id="2_86m4r"]
+[ext_resource type="Script" path="res://brick_manager.gd" id="3_yxk2w"]
+[ext_resource type="Script" path="res://game_manager.gd" id="4_manager"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(20, 720)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2y4vo"]
+size = Vector2(100, 20)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_8p2xt"]
+
+[node name="Main" type="Node2D"]
+script = ExtResource("4_manager")
+
+[node name="Walls" type="Node2D" parent="."]
+
+[node name="LeftWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(0, 360)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/LeftWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="RightWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(1152, 360)
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/RightWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="TopWall" type="StaticBody2D" parent="Walls"]
+position = Vector2(576, 0)
+rotation = 1.5708
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Walls/TopWall"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="BrickManager" type="Node2D" parent="."]
+script = ExtResource("3_yxk2w")
+
+[node name="Paddle" type="CharacterBody2D" parent="."]
+position = Vector2(576, 600)
+script = ExtResource("1_n4k7p")
+
+[node name="ColorRect" type="ColorRect" parent="Paddle"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -10.0
+offset_right = 50.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.337255, 0.666667, 1, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Paddle"]
+shape = SubResource("RectangleShape2D_2y4vo")
+
+[node name="Ball" type="CharacterBody2D" parent="."]
+position = Vector2(576, 550)
+collision_layer = 2
+collision_mask = 3
+script = ExtResource("2_86m4r")
+
+[node name="ColorRect" type="ColorRect" parent="Ball"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -10.0
+offset_top = -10.0
+offset_right = 10.0
+offset_bottom = 10.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(1, 0.843137, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Ball"]
+shape = SubResource("CircleShape2D_8p2xt")
+
+[node name="ScoreLabel" type="Label" parent="."]
+offset_left = 1000.0
+offset_top = 20.0
+offset_right = 1132.0
+offset_bottom = 46.0
+theme_override_colors/font_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0, 0, 0, 1)
+theme_override_constants/outline_size = 3
+theme_override_font_sizes/font_size = 24
+text = "分数: 0"
+horizontal_alignment = 2
+
+[node name="GameOverUI" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="ColorRect" type="ColorRect" parent="GameOverUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.588235)
+
+[node name="GameOverLabel" type="Label" parent="GameOverUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -100.0
+offset_right = 200.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 64
+text = "GAME OVER"
+horizontal_alignment = 1
+
+[node name="FinalScore" type="Label" parent="GameOverUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -20.0
+offset_right = 200.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 32
+text = "最终得分: 0"
+horizontal_alignment = 1
+
+[node name="RestartButton" type="Button" parent="GameOverUI"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = 40.0
+offset_right = 100.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 24
+text = "重新开始"
